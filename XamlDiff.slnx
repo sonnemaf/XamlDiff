@@ -1,0 +1,31 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/" />
+  <Folder Name="/Solution Items/Images/">
+    <File Path="Images/Logo.design" />
+  </Folder>
+  <Folder Name="/Solution Items/Images/Exports/">
+    <File Path="Images/Exports/IconDark.ico" />
+    <File Path="Images/Exports/IconDark.png" />
+    <File Path="Images/Exports/IconLight.ico" />
+    <File Path="Images/Exports/IconLight.png" />
+    <File Path="Images/Exports/Logo.png" />
+  </Folder>
+  <Folder Name="/Solution Items/Images/Screenshots/">
+    <File Path="Images/Screenshots/Screenshot1.png" />
+    <File Path="Images/Screenshots/Screenshot2.png" />
+    <File Path="Images/Screenshots/Screenshot3.png" />
+    <File Path="Images/Screenshots/Screenshot4.png" />
+    <File Path="Images/Screenshots/Screenshot5.png" />
+  </Folder>
+  <Project Path="XamlDiffWinUI/XamlDiff.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Deploy />
+  </Project>
+</Solution>

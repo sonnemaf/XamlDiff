@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page x:Class="XamlDiff.Views.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:XamlDiff"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:monaco="using:MonacoEditor.WinUI3"
+      xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
+      mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Name="MyCaptionTextBlockStyle"
+               TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource SystemAccentColor}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="0,12,0,0" />
+        </Style>
+    </Page.Resources>
+
+    <Grid Padding="8,0,8,8">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*"
+                           MinHeight="100" />
+        </Grid.RowDefinitions>
+
+        <Grid ColumnSpacing="8">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"
+                                  MinWidth="120" />
+                <ColumnDefinition Width="1*"
+                                  MinWidth="120" />
+            </Grid.ColumnDefinitions>
+
+            <CommandBar DefaultLabelPosition="Right">
+                <CommandBar.Content>
+                    <TextBlock Style="{StaticResource MyCaptionTextBlockStyle}"
+                               Text="Source" />
+                </CommandBar.Content>
+                <AppBarButton Command="{x:Bind ViewModel.PasteSourceCommand}"
+                              Icon="Paste"
+                              Label="Paste" />
+                <AppBarButton Command="{x:Bind ViewModel.OpenSourceCommand}"
+                              Icon="OpenFile"
+                              Label="Open" />
+            </CommandBar>
+
+            <monaco:MonacoEditorControl x:Name="editorSource"
+                                        Grid.Row="1"
+                                        EditorLanguage="xml"
+                                        EditorTheme="{ThemeResource EditorTheme}"
+                                        Text="{x:Bind ViewModel.Source.Value, Mode=TwoWay}" />
+
+            <CommandBar Grid.Column="1"
+                        DefaultLabelPosition="Right">
+                <CommandBar.Content>
+                    <TextBlock Style="{StaticResource MyCaptionTextBlockStyle}"
+                               Text="Destination" />
+                </CommandBar.Content>
+                <AppBarButton Command="{x:Bind ViewModel.PasteDestinationCommand}"
+                              Icon="Paste"
+                              Label="Paste" />
+                <AppBarButton Command="{x:Bind ViewModel.OpenDestinationCommand}"
+                              Icon="OpenFile"
+                              Label="Open" />
+            </CommandBar>
+
+            <monaco:MonacoEditorControl x:Name="editorDestination"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        EditorLanguage="xml"
+                                        EditorTheme="{ThemeResource EditorTheme}"
+                                        Text="{x:Bind ViewModel.Destination.Value, Mode=TwoWay}" />
+
+            <!--  Column Grid Splitter  -->
+            <toolkit:GridSplitter Grid.RowSpan="2"
+                                  Grid.Column="1"
+                                  Width="16"
+                                  HorizontalAlignment="Left"
+                                  ResizeBehavior="BasedOnAlignment"
+                                  ResizeDirection="Auto">
+                <toolkit:GridSplitter.RenderTransform>
+                    <TranslateTransform X="-7" />
+                </toolkit:GridSplitter.RenderTransform>
+            </toolkit:GridSplitter>
+        </Grid>
+
+        <!--  Row Grid Splitter  -->
+        <toolkit:GridSplitter Grid.Row="1"
+                              Height="16"
+                              VerticalAlignment="Top">
+            <toolkit:GridSplitter.RenderTransform>
+                <TranslateTransform Y="-7" />
+            </toolkit:GridSplitter.RenderTransform>
+        </toolkit:GridSplitter>
+
+        <Grid Grid.Row="1"
+              Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <CommandBar DefaultLabelPosition="Right">
+                <CommandBar.Content>
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="8">
+                        <TextBlock Style="{StaticResource MyCaptionTextBlockStyle}"
+                                   Text="VisualStates" />
+                        <SplitButton Margin="0,8"
+                                     Command="{x:Bind ViewModel.GenerateCommand}"
+                                     Content="Generate">
+                            <SplitButton.Flyout>
+                                <MenuFlyout>
+                                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.IncludeSource.Value, Mode=TwoWay}"
+                                                          Text="Include Source" />
+                                    <MenuFlyoutSeparator />
+                                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.GenerateVisualStateGroups.Value, Mode=TwoWay}"
+                                                          Text="Generate VisualStateGroups" />
+                                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.GenerateVisualStateGroup.Value, Mode=TwoWay}"
+                                                          Text="Generate VisualStateGroup" />
+                                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.GenerateVisualState.Value, Mode=TwoWay}"
+                                                          Text="Generate VisualState" />
+                                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.GenerateStateTrigger.Value, Mode=TwoWay}"
+                                                          Text="Generate StateTrigger" />
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                        </SplitButton>
+                    </StackPanel>
+                </CommandBar.Content>
+                <AppBarButton Command="{x:Bind ViewModel.CopyOutputCommand}"
+                              Icon="Copy"
+                              Label="Copy">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="C"
+                                             Modifiers="Control" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+                <AppBarButton Click="Settings_Click"
+                              Icon="Setting"
+                              Label="Settings">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="I"
+                                             Modifiers="Control" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
+            </CommandBar>
+
+            <monaco:MonacoEditorControl x:Name="editorOutput"
+                                        Grid.Row="1"
+                                        Visibility="{x:Bind IsEmpty(ViewModel.Diff.Errors.Count), Mode=OneWay}"
+                                        Grid.ColumnSpan="2"
+                                        EditorLanguage="xml"
+                                        EditorTheme="{ThemeResource EditorTheme}"
+                                        IsReadOnly="True"
+                                        Text="{x:Bind ViewModel.Diff.Output, Mode=OneWay}" />
+
+            <ListView x:Name="listViewErrors"
+                      Header="Errors"
+                      Visibility="{x:Bind IsNotEmpty(ViewModel.Diff.Errors.Count), Mode=OneWay}"
+                      ItemsSource="{x:Bind ViewModel.Diff.Errors}" Grid.Row="1" />
+        </Grid>
+
+    </Grid>
+</Page>
