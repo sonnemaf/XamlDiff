@@ -143,6 +143,15 @@
                                              Modifiers="Control" />
                     </AppBarButton.KeyboardAccelerators>
                 </AppBarButton>
+                <AppBarButton Command="{x:Bind ViewModel.SwitchCommand}"
+                              Icon="Switch"
+                              Label="Switch"
+                              ToolTipService.ToolTip="Switch Source/Destination">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="C"
+                                             Modifiers="Control" />
+                    </AppBarButton.KeyboardAccelerators>
+                </AppBarButton>
                 <AppBarButton Click="Settings_Click"
                               Icon="Setting"
                               Label="Settings">
@@ -155,17 +164,25 @@
 
             <monaco:MonacoEditorControl x:Name="editorOutput"
                                         Grid.Row="1"
-                                        Visibility="{x:Bind IsEmpty(ViewModel.Diff.Errors.Count), Mode=OneWay}"
                                         Grid.ColumnSpan="2"
                                         EditorLanguage="xml"
                                         EditorTheme="{ThemeResource EditorTheme}"
                                         IsReadOnly="True"
-                                        Text="{x:Bind ViewModel.Diff.Output, Mode=OneWay}" />
+                                        Text="{x:Bind ViewModel.Diff.Output, Mode=OneWay}"
+                                        Visibility="{x:Bind IsEmpty(ViewModel.Diff.Errors.Count), Mode=OneWay}" />
 
             <ListView x:Name="listViewErrors"
+                      Grid.Row="1"
                       Header="Errors"
-                      Visibility="{x:Bind IsNotEmpty(ViewModel.Diff.Errors.Count), Mode=OneWay}"
-                      ItemsSource="{x:Bind ViewModel.Diff.Errors}" Grid.Row="1" />
+                      ItemsSource="{x:Bind ViewModel.Diff.Errors}"
+                      Visibility="{x:Bind IsNotEmpty(ViewModel.Diff.Errors.Count), Mode=OneWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <TextBlock Text="{x:Bind (x:String)}"
+                                   TextWrapping="WrapWholeWords" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
 
     </Grid>

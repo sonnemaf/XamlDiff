@@ -86,6 +86,11 @@ public sealed partial class MainViewModel : ObservableObject {
         OpenFile(Destination);
     }
 
+    [RelayCommand]
+    private void Switch() {
+        (Source.Value, Destination.Value) = (Destination.Value, Source.Value);
+    }
+
 
     private static async void Paste(SettingValue<string> setting) {
         try {
