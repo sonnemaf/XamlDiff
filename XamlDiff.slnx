@@ -4,7 +4,9 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Folder Name="/Solution Items/" />
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/Solution Items/Images/">
     <File Path="Images/Logo.design" />
   </Folder>
@@ -14,6 +16,7 @@
     <File Path="Images/Exports/IconLight.ico" />
     <File Path="Images/Exports/IconLight.png" />
     <File Path="Images/Exports/Logo.png" />
+    <File Path="Images/Exports/StoreBadge.png" />
   </Folder>
   <Folder Name="/Solution Items/Images/Screenshots/">
     <File Path="Images/Screenshots/Screenshot1.png" />
