@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "XamlDiff.Test (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "XamlDiff.Test (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

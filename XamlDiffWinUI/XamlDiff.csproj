@@ -87,4 +87,7 @@
         <PRIResource Remove="BundleArtifacts\**" />
         <PRIResource Remove="AppPackages\**" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\XamlDiff.Library\XamlDiff.Library.csproj" />
+    </ItemGroup>
 </Project>

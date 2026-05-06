@@ -5,7 +5,7 @@ using Microsoft.Windows.Storage;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Popups;
 using XamlDiff.Helpers;
-using XamlDiff.Models;
+using XamlDiff.Library.Models;
 
 namespace XamlDiff.ViewModels;
 

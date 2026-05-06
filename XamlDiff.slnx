@@ -25,6 +25,13 @@
     <File Path="Images/Screenshots/Screenshot4.png" />
     <File Path="Images/Screenshots/Screenshot5.png" />
   </Folder>
+  <Project Path="XamlDiff.Library/XamlDiff.Library.csproj" Id="6f7dadbe-9bef-45cd-b193-047c4ab01b86" />
+  <Project Path="XamlDiff.Test/XamlDiff.Test.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Deploy />
+  </Project>
   <Project Path="XamlDiffWinUI/XamlDiff.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
