@@ -151,66 +151,54 @@ public sealed partial class Diff : ObservableObject {
             return;
         }
 
-        string indent = Indent(indentSize + 1);
-        if (itemSource is not null) {
-            foreach (var aSource in itemSource.Attributes() ?? []) {
-                var aDest = itemDest.Attributes().FirstOrDefault(a => a.Name == aSource.Name);
+        if (itemSource is not null && itemDest is not null) {
 
-                if (aDest is null) {
+            string indent = Indent(indentSize + 1);
+
+            foreach (var aSource in itemSource.Attributes() ?? []) {
+                if (itemDest.Attribute(aSource.Name) is XAttribute aDest) {
+                    if (aSource.Value != aDest.Value) {
+                        // Apply changed attributes.
+                        var n = aSource.Name.ToString().Contains('.') ? aSource.Name.ToString() : $"{itemSource.Name.LocalName}.{aSource.Name}";
+                        sb.AppendLine($"""{indent}<Setter Target="{name}.({n})" Value="{WebUtility.HtmlEncode(aDest.Value)}" />""");
+                    }
+                } else {
                     var name2 = aSource.Name.LocalName.Contains('.') ? aSource.Name.LocalName : $"{itemSource.Name}.{aSource.Name}";
-                    var xx = itemDest.Elements(name2).ToArray();
-                    if (xx.Length == 0) {
+                    if (itemDest?.Element(name2) is XElement xx) {
+                        if (xx.Value != aSource.Value) {
+                            sb.AppendLine($"""{indent}<Setter Target="{name}.({name2})" Value="{WebUtility.HtmlEncode(xx.Value)}" />""");
+                        }
+                    } else {
                         // Remove deleted attributes by resetting them to their default value.
                         var n = aSource.Name.ToString().Contains('.') ? aSource.Name.ToString() : $"{itemSource.Name.LocalName}.{aSource.Name}";
                         var v = GetEmptyValue(n, aSource.Value, aSource.Name);
                         sb.AppendLine($"""{indent}<Setter Target="{name}.({n})" Value="{v}" />""");
-                    } else {
-                        if (xx[0].Value != aSource.Value) {
-                            sb.AppendLine($"""{indent}<Setter Target="{name}.({name2})" Value="{WebUtility.HtmlEncode(xx[0].Value)}" />""");
-                        }
                     }
-                } else if (aSource.Value != aDest.Value) {
-                    // Apply changed attributes.
-                    var n = aSource.Name.ToString().Contains('.') ? aSource.Name.ToString() : $"{itemSource.Name.LocalName}.{aSource.Name}";
-                    sb.AppendLine($"""{indent}<Setter Target="{name}.({n})" Value="{WebUtility.HtmlEncode(aDest.Value)}" />""");
                 }
             }
-        }
 
-        if (itemDest is not null) {
-
-            foreach (var aDest in itemDest.Attributes() ?? []) {
-                var aSource = itemSource?.Attributes().FirstOrDefault(a => a.Name == aDest.Name);
-
-                if (aSource is null) {
-
+            foreach (var aDest in itemDest.Attributes()) {
+                if (itemSource?.Attribute(aDest.Name) is null) {
                     var name2 = $"{itemDest.Name}.{aDest.Name}";
-                    var xx = itemSource?.Elements(name2).ToArray();
-                    if (xx?.Length == 0) {
+                    if (itemSource?.Element(name2) is XElement xx) {
+                        if (xx.Value != aDest.Value) {
+                            sb.AppendLine($"""{indent}<Setter Target="{name}.({name2})" Value="{WebUtility.HtmlEncode(aDest.Value)}" />""");
+                        }
+                    } else {
                         // Add newly introduced attributes.
                         var n = aDest.Name.ToString().Contains('.') ? aDest.Name.ToString() : $"{itemDest.Name.LocalName}.{aDest.Name}";
                         sb.AppendLine($"""{indent}<Setter Target="{name}.({n})" Value="{WebUtility.HtmlEncode(aDest.Value)}" />""");
-                    } else {
-                        if (xx?[0].Value != aDest.Value) {
-                            sb.AppendLine($"""{indent}<Setter Target="{name}.({name2})" Value="{WebUtility.HtmlEncode(aDest.Value)}" />""");
-                        }
                     }
                 }
             }
-        }
-
-        if (itemSource is not null && itemDest is not null) {
 
             foreach (var subItemSource in itemSource?.Elements() ?? []) {
-                var subItemDest = itemDest?.Elements().FirstOrDefault(el => el.Name == subItemSource.Name);
-                if (subItemDest is null && subItemSource.Name.LocalName.Contains('.')) {
-
-
+                if (itemDest?.Element(subItemSource.Name) is null) {
                     string s = subItemSource.Name.LocalName;
                     string a = subItemSource.Name.LocalName.Contains('.') && subItemSource.Name.LocalName.StartsWith(itemSource.Name.LocalName) ?
                             subItemSource.Name.LocalName[(1 + subItemSource.Name.LocalName.IndexOf('.'))..] : subItemSource.Name.LocalName;
 
-                    if (itemDest?.Attribute(a) is XAttribute att) {
+                    if (itemDest?.Attribute(a) is not null) {
                         continue;
                     }
 
@@ -219,37 +207,26 @@ public sealed partial class Diff : ObservableObject {
                     string v = "{x:Null}";
 
                     sb.AppendLine($$"""{{indent}}<Setter Target="{{name}}.({{s}})" Value="{{v}}" />""");
-                } else {
-                    if (subItemSource.Value != subItemDest!.Value) {
-                        var s = name;
-                        if (subItemDest.Name.LocalName.Contains('.')) {
-                            s += $".({subItemDest.Name.LocalName})";
-                            AddState(s, sb, subItemSource, subItemDest, indentSize);
-                        }
+                }
+            }
+
+            foreach (XElement subItemDest in itemDest?.Elements() ?? []) {
+                if (itemSource?.Element(subItemDest.Name) is null) {
+                    string s = subItemDest.Name.LocalName;
+                    string a = subItemDest.Name.LocalName.Contains('.') && subItemDest.Name.LocalName.StartsWith(itemDest.Name.LocalName) ?
+                            subItemDest.Name.LocalName[(1 + subItemDest.Name.LocalName.IndexOf('.'))..] : subItemDest.Name.LocalName;
+
+                    if (itemSource?.Attribute(a) is not null) {
+                        continue;
                     }
+
+                    sb.AppendLine($"""{indent}<Setter Target="{name}.({s})" Value="{WebUtility.HtmlEncode(subItemDest.Value)}" />""");
                 }
             }
-        }
 
-
-        foreach (XElement subItemDest in itemDest?.Elements() ?? []) {
-            var subItemSource = itemSource?.Elements().FirstOrDefault(el => el.Name == subItemDest.Name);
-
-            if (subItemSource is null) {
-                string s = subItemDest.Name.LocalName;
-                string a = subItemDest.Name.LocalName.Contains('.') && subItemDest.Name.LocalName.StartsWith(itemDest.Name.LocalName) ?
-                        subItemDest.Name.LocalName[(1 + subItemDest.Name.LocalName.IndexOf('.'))..] : subItemDest.Name.LocalName;
-
-                if (itemSource?.Attribute(a) is XAttribute att) {
-                    continue;
-                }
-
-                sb.AppendLine($"""{indent}<Setter Target="{name}.({s})" Value="{WebUtility.HtmlEncode(subItemDest.Value)}" />""");
+            if (itemSource is not null && itemDest is not null && !itemSource.HasElements && !itemDest.HasElements && itemSource.Value != itemDest.Value) {
+                sb.AppendLine($"""{indent}<Setter Target="{name}" Value="{WebUtility.HtmlEncode(itemDest.Value)}" />""");
             }
-        }
-
-        if (itemSource is not null && itemDest is not null && !itemSource.HasElements && !itemDest.HasElements && itemSource.Value != itemDest.Value) {
-            sb.AppendLine($"""{indent}<Setter Target="{name}" Value="{WebUtility.HtmlEncode(itemDest.Value)}" />""");
         }
     }
 

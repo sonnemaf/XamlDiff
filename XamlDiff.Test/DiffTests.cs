@@ -1,5 +1,7 @@
 using XamlDiff.Library.Models;
 
+[assembly: DoNotParallelize]
+
 namespace XamlDiff.Test;
 
 [TestClass]
@@ -323,7 +325,7 @@ public partial class DiffTests {
     }
 
     [TestMethod]
-    public void TestAttachedPropertyAttribute2() {
+    public void TestAttachedPropertyAttributeToElement() {
         // Arrange
         var diff = new Diff();
 
@@ -359,7 +361,7 @@ public partial class DiffTests {
     }
 
     [TestMethod]
-    public void TestAttachedPropertyAttribute2b() {
+    public void TestAttachedPropertyNewElement() {
         // Arrange
         var diff = new Diff();
 
@@ -395,7 +397,41 @@ public partial class DiffTests {
     }
 
     [TestMethod]
-    public void TestAttachedPropertyAttribute3() {
+    public void TestAttachedPropertyNewAttribute() {
+        // Arrange
+        var diff = new Diff();
+
+        // Act
+        diff.Generate(""""
+            <Page xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                <Grid>
+                    <TextBlock x:Name="TextBlock1" />
+                </Grid>
+            </Page>
+            """",
+            """"
+            <Page xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                <Grid>
+                    <TextBlock x:Name="TextBlock1" Grid.Row="2" />
+                </Grid>
+            </Page>
+            """"
+            , false, false, false, false, false);
+
+        // Assert
+        var expected = """
+            <VisualState.Setters>
+                <Setter Target="TextBlock1.(Grid.Row)" Value="2" />
+            </VisualState.Setters>
+
+            """;
+
+        Assert.AreEqual(expected, diff.Output);
+        Assert.IsEmpty(diff.Errors);
+    }
+
+    [TestMethod]
+    public void TestAttachedPropertyElementToAttribute() {
         // Arrange
         var diff = new Diff();
 
