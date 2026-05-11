@@ -11,7 +11,7 @@
     <Identity
       Name="ReflectionIT.XamlDiff"
       Publisher="CN=982D73A2-033A-4B2D-87A1-5C7BB718475B"
-      Version="1.6.2.0" />
+      Version="1.6.4.0" />
 
     <mp:PhoneIdentity PhoneProductId="a19a50ea-a8d2-44fc-9c64-2d27f9fb798e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

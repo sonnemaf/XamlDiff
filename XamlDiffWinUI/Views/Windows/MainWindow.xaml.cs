@@ -21,7 +21,6 @@ public sealed partial class MainWindow : Window {
         ExtendsContentIntoTitleBar = true;
         SetTitleBar(AppTitleBar);
         SetAppWindowIcon();
-
         AppTitleBar.ActualThemeChanged += AppTitleBar_ActualThemeChanged;
 
         // Navigate the root frame to the main page on startup.

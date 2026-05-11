@@ -18,7 +18,7 @@ public sealed partial class Diff : ObservableObject {
     /// <summary>
     /// Gets the collection of errors encountered while parsing or generating the diff.
     /// </summary>
-    public ObservableCollection<string> Errors { get; set; } = [];
+    public ObservableCollection<Error> Errors { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the generated XAML output.
@@ -55,10 +55,10 @@ public sealed partial class Diff : ObservableObject {
                 int indent = 0;
 
                 if (namedSourceElements.Length == 0) {
-                    Errors.Add("Source has no named elements, only elements with x:Names can be compared.");
+                    Errors.Add(new Error("Source has no named elements, only elements with x:Names can be compared."));
                 }
                 if (namedDestElements.Length == 0) {
-                    Errors.Add("Destination has no named elements, only elements with x:Names can be compared.");
+                    Errors.Add(new Error("Destination has no named elements, only elements with x:Names can be compared."));
                 }
 
                 var sb = new StringBuilder(4000);
@@ -83,7 +83,7 @@ public sealed partial class Diff : ObservableObject {
                     var itemDest = namedDestElements.FirstOrDefault(el => el.Attributes().Any(a => IsNameAttribute(a) && a.Value == itemSourceName));
 
                     if (itemDest is null) {
-                        Errors.Add($"Destination has no element with the x:Names '{itemSourceName}'");
+                        Errors.Add(new Error($"Destination has no element with the x:Names '{itemSourceName}'"));
                     } else {
                         AddState(itemSourceName, sb, itemSource, itemDest, indent);
                     }
@@ -125,10 +125,10 @@ public sealed partial class Diff : ObservableObject {
                 }
 
             } catch (Exception ex) {
-                Errors.Add($"Destination is invalid XAML - {ex.Message}");
+                Errors.Add(new Error($"Destination is invalid XAML - {ex.Message}"));
             }
         } catch (Exception ex) {
-            Errors.Add($"Source is invalid XAML - {ex.Message}");
+            Errors.Add(new Error($"Source is invalid XAML - {ex.Message}"));
         }
     }
 

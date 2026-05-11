@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:XamlDiff"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:models="using:XamlDiff.Library.Models"
       xmlns:monaco="using:MonacoEditor.WinUI3"
       xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
       mc:Ignorable="d">
@@ -164,7 +165,6 @@
 
             <monaco:MonacoEditorControl x:Name="editorOutput"
                                         Grid.Row="1"
-                                        Grid.ColumnSpan="2"
                                         EditorLanguage="xml"
                                         EditorTheme="{ThemeResource EditorTheme}"
                                         IsReadOnly="True"
@@ -177,8 +177,8 @@
                       ItemsSource="{x:Bind ViewModel.Diff.Errors}"
                       Visibility="{x:Bind IsNotEmpty(ViewModel.Diff.Errors.Count), Mode=OneWay}">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="x:String">
-                        <TextBlock Text="{x:Bind (x:String)}"
+                    <DataTemplate x:DataType="models:Error">
+                        <TextBlock Text="{x:Bind Message}"
                                    TextWrapping="WrapWholeWords" />
                     </DataTemplate>
                 </ListView.ItemTemplate>

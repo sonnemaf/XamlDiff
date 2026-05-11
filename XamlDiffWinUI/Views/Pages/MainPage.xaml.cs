@@ -28,6 +28,8 @@ public sealed partial class MainPage : Page {
         editorOutput.SetOptionsAsync(options);
 
         ViewModel.GenerateCommand.Execute(null);
+
+        //listViewErrors.ItemsSource = ViewModel.Diff.Errors;
     }
 
     private void Settings_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
