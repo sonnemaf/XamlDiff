@@ -95,6 +95,14 @@
         <PRIResource Remove="AppPackages\**" />
     </ItemGroup>
     <ItemGroup>
+      <None Remove="Views\Resources\TitleBarThemes.xaml" />
+    </ItemGroup>
+    <ItemGroup>
         <ProjectReference Include="..\XamlDiff.Library\XamlDiff.Library.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Page Update="Views\Resources\TitleBarThemes.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
     </ItemGroup>
 </Project>

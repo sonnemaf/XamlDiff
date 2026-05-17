@@ -7,21 +7,18 @@
             <ImageIconSource x:Key="AppIcon"
                              ImageSource="/Assets/Tiles/IconDark.ico" />
             <ImageSource x:Key="SettingIcon">/Assets/Tiles/IconDark.png</ImageSource>
-            <Color x:Key="TitleBarButton">#FFFFFF</Color>
         </ResourceDictionary>
         <ResourceDictionary x:Key="HighContrast">
             <ImageIconSource x:Key="AppIcon"
                              ImageSource="/Assets/Tiles/IconDark.ico" />
             <x:String x:Key="EditorTheme">vs-dark</x:String>
             <ImageSource x:Key="SettingIcon">/Assets/Tiles/IconDark.png</ImageSource>
-            <Color x:Key="TitleBarButton">#FFFFFF</Color>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Light">
             <ImageIconSource x:Key="AppIcon"
                              ImageSource="/Assets/Tiles/IconLight.ico" />
             <x:String x:Key="EditorTheme">vs</x:String>
             <ImageSource x:Key="SettingIcon">/Assets/Tiles/IconLight.png</ImageSource>
-            <Color x:Key="TitleBarButton">#000000</Color>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

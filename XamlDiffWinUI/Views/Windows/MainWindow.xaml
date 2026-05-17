@@ -18,7 +18,11 @@
 
         <TitleBar x:Name="AppTitleBar"
                   Title="XAML Diff"
-                  helpers:TitleBarEx.ButtonForeground="{ThemeResource TitleBarButton}"
+                  helpers:TitleBarExtensions.ButtonForegroundColor="{ThemeResource TitleBarCaptionButtonForegroundColor}"
+                  helpers:TitleBarExtensions.ButtonHoverBackgroundColor="{ThemeResource TitleBarCaptionButtonHoverBackgroundColor}"
+                  helpers:TitleBarExtensions.ButtonHoverForegroundColor="{ThemeResource TitleBarCaptionButtonHoverForegroundColor}"
+                  helpers:TitleBarExtensions.ButtonPressedBackgroundColor="{ThemeResource TitleBarCaptionButtonPressedBackgroundColor}"
+                  helpers:TitleBarExtensions.ButtonPressedForegroundColor="{ThemeResource TitleBarCaptionButtonPressedForegroundColor}"
                   BackRequested="AppTitleBar_BackRequested"
                   IconSource="{ThemeResource AppIcon}"
                   Subtitle="Generate VisualStates Setters" />
