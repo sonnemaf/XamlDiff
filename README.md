@@ -14,7 +14,7 @@
 </p>
 
 # Overview
-This free tool helps yout to generate the VisualState Setters using a diff analysis of your named elements in your XAML. This was a feature of Visual Studio Blend but not any more. This tool come to the rescue.
+This free tool helps you to generate the VisualState Setters using a diff analysis of your named elements in your XAML. This was a feature of Visual Studio Blend but not any more. This tool come to the rescue.
 
 
 # Screenshots
