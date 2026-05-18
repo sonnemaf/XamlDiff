@@ -1,22 +1,12 @@
-﻿using CommunityToolkit.WinUI;
-using CommunityToolkit.WinUI.Helpers;
-using Microsoft.UI;
+﻿using CommunityToolkit.WinUI.Helpers;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Windows.UI;
-using Windows.UI.ViewManagement;
 
 namespace XamlDiff.Helpers;
 
 public static class TitleBarExtensions {
-
-    private static AppWindowTitleBar? GetTitleBar() => XamlDiff.App.Window!.AppWindow.TitleBar;
-
 
     #region ButtonForegroundColor Attached Property
 
@@ -62,6 +52,48 @@ public static class TitleBarExtensions {
     }
 
     #endregion ButtonForeground Attached Property
+
+
+    #region ButtonBackgroundColor Attached Property
+
+    /// <summary>
+    /// Identifies the ButtonBackgroundColor attachted property. This enables animation, styling, binding, etc...
+    /// </summary>
+    public static readonly DependencyProperty ButtonBackgroundColorProperty =
+        DependencyProperty.RegisterAttached("ButtonBackgroundColor",
+                                            typeof(object),
+                                            typeof(TitleBarExtensions),
+                                            new PropertyMetadata(null, OnButtonBackgroundColorChanged));
+
+    /// <summary>
+    /// ButtonBackgroundColor changed handler.
+    /// </summary>
+    /// <param name="d">FrameworkElement that changed its ButtonBackgroundColor attached property.</param>
+    /// <param name="e">DependencyPropertyChangedEventArgs with the new and old value.</param>
+    private static void OnButtonBackgroundColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        d.DispatcherQueue.TryEnqueue(() => {
+            GetTitleBar()?.ButtonBackgroundColor = GetColor(e.NewValue);
+        });
+    }
+
+    /// <summary>
+    /// Gets the value of the ButtonBackgroundColor attached property from the specified FrameworkElement.
+    /// </summary>
+    public static object GetButtonBackgroundColor(DependencyObject obj) {
+        return (object)obj.GetValue(ButtonBackgroundColorProperty);
+    }
+
+
+    /// <summary>
+    /// Sets the value of the ButtonBackgroundColor attached property to the specified FrameworkElement.
+    /// </summary>
+    /// <param name="obj">The object on which to set the ButtonBackgroundColor attached property.</param>
+    /// <param name="value">The property value to set.</param>
+    public static void SetButtonBackgroundColor(DependencyObject obj, object value) {
+        obj.SetValue(ButtonBackgroundColorProperty, value);
+    }
+
+    #endregion ButtonBackgroundColor Attached Property
 
 
     #region ButtonHoverBackgroundColor Attached Property
@@ -215,11 +247,100 @@ public static class TitleBarExtensions {
 
     #endregion ButtonPressedBackgroundColor Attached Property
 
-    private static Color GetColor(object color) {
-        return color switch {
-            string s => s.ToColor(),
+
+    #region ButtonInactiveForegroundColor Attached Property
+
+    /// <summary>
+    /// Identifies the ButtonInactiveForegroundColor attachted property. This enables animation, styling, binding,
+    /// etc...
+    /// </summary>
+    public static readonly DependencyProperty ButtonInactiveForegroundColorProperty =
+        DependencyProperty.RegisterAttached("ButtonInactiveForegroundColor",
+                                            typeof(object),
+                                            typeof(TitleBarExtensions),
+                                            new PropertyMetadata(null, OnButtonInactiveForegroundColorChanged));
+
+    /// <summary>
+    /// ButtonInactiveForegroundColor changed handler.
+    /// </summary>
+    /// <param name="d">FrameworkElement that changed its ButtonInactiveForegroundColor attached property.</param>
+    /// <param name="e">DependencyPropertyChangedEventArgs with the new and old value.</param>
+    private static void OnButtonInactiveForegroundColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        d.DispatcherQueue.TryEnqueue(() => {
+            GetTitleBar()?.ButtonInactiveForegroundColor = GetColor(e.NewValue);
+        });
+    }
+
+    /// <summary>
+    /// Gets the value of the ButtonInactiveForegroundColor attached property from the specified FrameworkElement.
+    /// </summary>
+    public static object GetButtonInactiveForegroundColor(DependencyObject obj) {
+        return (object)obj.GetValue(ButtonInactiveForegroundColorProperty);
+    }
+
+
+    /// <summary>
+    /// Sets the value of the ButtonInactiveForegroundColor attached property to the specified FrameworkElement.
+    /// </summary>
+    /// <param name="obj">The object on which to set the ButtonInactiveForegroundColor attached property.</param>
+    /// <param name="value">The property value to set.</param>
+    public static void SetButtonInactiveForegroundColor(DependencyObject obj, object value) {
+        obj.SetValue(ButtonInactiveForegroundColorProperty, value);
+    }
+
+    #endregion ButtonInactiveForegroundColor Attached Property
+
+
+    #region ButtonInactiveBackgroundColor Attached Property
+
+    /// <summary>
+    /// Identifies the ButtonInactiveBackgroundColor attachted property. This enables animation, styling, binding,
+    /// etc...
+    /// </summary>
+    public static readonly DependencyProperty ButtonInactiveBackgroundColorProperty =
+        DependencyProperty.RegisterAttached("ButtonInactiveBackgroundColor",
+                                            typeof(object),
+                                            typeof(TitleBarExtensions),
+                                            new PropertyMetadata(null, OnButtonInactiveBackgroundColorChanged));
+
+    /// <summary>
+    /// ButtonInactiveBackgroundColor changed handler.
+    /// </summary>
+    /// <param name="d">FrameworkElement that changed its ButtonInactiveBackgroundColor attached property.</param>
+    /// <param name="e">DependencyPropertyChangedEventArgs with the new and old value.</param>
+    private static void OnButtonInactiveBackgroundColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        d.DispatcherQueue.TryEnqueue(() => {
+            GetTitleBar()?.ButtonInactiveBackgroundColor = GetColor(e.NewValue);
+        });
+    }
+
+    /// <summary>
+    /// Gets the value of the ButtonInactiveBackgroundColor attached property from the specified FrameworkElement.
+    /// </summary>
+    public static object GetButtonInactiveBackgroundColor(DependencyObject obj) {
+        return (object)obj.GetValue(ButtonInactiveBackgroundColorProperty);
+    }
+
+
+    /// <summary>
+    /// Sets the value of the ButtonInactiveBackgroundColor attached property to the specified FrameworkElement.
+    /// </summary>
+    /// <param name="obj">The object on which to set the ButtonInactiveBackgroundColor attached property.</param>
+    /// <param name="value">The property value to set.</param>
+    public static void SetButtonInactiveBackgroundColor(DependencyObject obj, object value) {
+        obj.SetValue(ButtonInactiveBackgroundColorProperty, value);
+    }
+
+    #endregion ButtonInactiveBackgroundColor Attached Property
+
+
+    private static Color GetColor(object color) =>
+        color switch {
+            string colorText => colorText.ToColor(),
             SolidColorBrush b => b.Color,
             { } x => (Color)x,
         };
-    }
+
+    private static AppWindowTitleBar? GetTitleBar() => XamlDiff.App.Window!.AppWindow.TitleBar;
+
 }

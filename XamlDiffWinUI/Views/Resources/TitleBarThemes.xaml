@@ -3,11 +3,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
-            <!--<Color x:Key="TitleBarCaptionButtonForegroundColor">Red</Color>-->
-
             <StaticResource x:Key="TitleBarCaptionButtonForegroundColor"
                             ResourceKey="SystemControlForegroundBaseHighBrush" />
-
+            <StaticResource x:Key="TitleBarCaptionButtonBackgroundColor"
+                            ResourceKey="SubtleFillColorTransparentBrush" />
 
             <StaticResource x:Key="TitleBarCaptionButtonHoverForegroundColor"
                             ResourceKey="SystemControlForegroundBaseHighBrush" />
@@ -17,12 +16,17 @@
 
             <Color x:Key="TitleBarCaptionButtonHoverBackgroundColor">#1A1A1A</Color>
             <Color x:Key="TitleBarCaptionButtonPressedBackgroundColor">#333333</Color>
+
+            <Color x:Key="TitleBarCaptionButtonInactiveForegroundColor">#969696</Color>
+            <Color x:Key="TitleBarCaptionButtonInactiveBackgroundColor">Transparent</Color>
+
         </ResourceDictionary>
         <ResourceDictionary x:Key="Light">
-            <!--<Color x:Key="TitleBarCaptionButtonForegroundColor">Blue</Color>-->
-
             <StaticResource x:Key="TitleBarCaptionButtonForegroundColor"
                             ResourceKey="SystemControlForegroundBaseHighBrush" />
+
+            <StaticResource x:Key="TitleBarCaptionButtonBackgroundColor"
+                            ResourceKey="SubtleFillColorTransparentBrush" />
 
             <StaticResource x:Key="TitleBarCaptionButtonHoverForegroundColor"
                             ResourceKey="SystemControlForegroundBaseHighBrush" />
@@ -32,18 +36,29 @@
 
             <Color x:Key="TitleBarCaptionButtonHoverBackgroundColor">#E9E9E9</Color>
             <Color x:Key="TitleBarCaptionButtonPressedBackgroundColor">#B6B6B6</Color>
+
+            <Color x:Key="TitleBarCaptionButtonInactiveForegroundColor">#868686</Color>
+            <Color x:Key="TitleBarCaptionButtonInactiveBackgroundColor">Transparent</Color>
         </ResourceDictionary>
         <ResourceDictionary x:Key="HighContrast">
             <StaticResource x:Key="TitleBarCaptionButtonForegroundColor"
                             ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="TitleBarCaptionButtonBackgroundColor"
+                            ResourceKey="SubtleFillColorTransparentBrush" />
+
             <StaticResource x:Key="TitleBarCaptionButtonHoverForegroundColor"
                             ResourceKey="SystemControlForegroundBaseHighBrush" />
             <StaticResource x:Key="TitleBarCaptionButtonHoverBackgroundColor"
                             ResourceKey="SystemColorHighlightColor" />
+
             <StaticResource x:Key="TitleBarCaptionButtonPressedForegroundColor"
                             ResourceKey="SystemControlForegroundBaseHighBrush" />
             <StaticResource x:Key="TitleBarCaptionButtonPressedBackgroundColor"
                             ResourceKey="SystemColorHotlightColor" />
+
+            <StaticResource x:Key="TitleBarCaptionButtonInactiveForegroundColor"
+                            ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <Color x:Key="TitleBarCaptionButtonInactiveBackgroundColor">Transparent</Color>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

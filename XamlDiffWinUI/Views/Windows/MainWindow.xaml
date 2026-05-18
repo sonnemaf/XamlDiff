@@ -21,6 +21,7 @@
                   helpers:TitleBarExtensions.ButtonForegroundColor="{ThemeResource TitleBarCaptionButtonForegroundColor}"
                   helpers:TitleBarExtensions.ButtonHoverBackgroundColor="{ThemeResource TitleBarCaptionButtonHoverBackgroundColor}"
                   helpers:TitleBarExtensions.ButtonHoverForegroundColor="{ThemeResource TitleBarCaptionButtonHoverForegroundColor}"
+                  helpers:TitleBarExtensions.ButtonInactiveForegroundColor="{ThemeResource TitleBarCaptionButtonInactiveForegroundColor}"
                   helpers:TitleBarExtensions.ButtonPressedBackgroundColor="{ThemeResource TitleBarCaptionButtonPressedBackgroundColor}"
                   helpers:TitleBarExtensions.ButtonPressedForegroundColor="{ThemeResource TitleBarCaptionButtonPressedForegroundColor}"
                   BackRequested="AppTitleBar_BackRequested"
